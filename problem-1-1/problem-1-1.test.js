@@ -42,6 +42,8 @@ class Bag {
   }
 }
 
+module.exports = Bag;
+
 test("백은 비어있는 상태로 생성된다", () => {
   const bag = new Bag();
 
