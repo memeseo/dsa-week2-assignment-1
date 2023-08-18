@@ -74,6 +74,8 @@ class Stack {
   }
 }
 
+module.exports = Stack;
+
 test("스택을 생성하면 비어있다", () => {
   const stack = new Stack();
 
