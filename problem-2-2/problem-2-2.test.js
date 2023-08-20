@@ -64,19 +64,19 @@ const solution = (braces) => {
 
   const newArr = braces.split('');
 
-  for (const item of newArr) {
-    if (item === '(' || item === '[' || item === '{') {
-      stack.push(item);
-    } else {
-      for (const prev of stack) {
-        if (prev !== mapping[item]) {
-          return false;
-        }
-      }
-    }
-  }
+  // for (const item of newArr) {
+  //   if (item === '(' || item === '[' || item === '{') {
+  //     stack.push(item);
+  //   } else {
+  //     for (const prev of stack) {
+  //       if (prev !== mapping[item]) {
+  //         return false;
+  //       }
+  //     }
+  //   }
+  // }
 
-  return true;
+  // return true;
 };
 
 const braces = '{([])}';
