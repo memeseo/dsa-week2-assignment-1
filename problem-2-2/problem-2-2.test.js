@@ -59,10 +59,10 @@ class Stack {
   }
 }
 const solution = (braces) => {
-  const stack = new Stack();
-  const mapping = { ')': '(', '}': '{', ']': '[' };
+  // const stack = new Stack();
+  // const mapping = { ')': '(', '}': '{', ']': '[' };
 
-  const newArr = braces.split('');
+  // const newArr = braces.split('');
 
   // for (const item of newArr) {
   //   if (item === '(' || item === '[' || item === '{') {
