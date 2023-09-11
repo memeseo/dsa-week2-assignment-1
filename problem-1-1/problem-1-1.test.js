@@ -1,49 +1,5 @@
-// D, S, A, E, X, A, M, P, L, E
 class Bag {
-  #items = [];
-
-  add(item) {
-    this.#items.push(item);
-  }
-
-  isEmpty() {
-    return this.#items.length === 0;
-  }
-
-  size() {
-    return this.#items.length;
-  }
-
-  display() {
-    console.log(this.#items);
-  }
-
-  [Symbol.iterator]() {
-    let index = 0;
-    const data = this.#items;
-
-    return {
-      next() {
-        return index < data.length ? {
-          done: false, value: data[index++],
-        } : { done: true };
-      },
-    };
-  }
 }
-
-// const bag = new Bag();
-// bag.add('D');
-// bag.add('S');
-// bag.add('A');
-// bag.add('E');
-// bag.add('X');
-// bag.add('A');
-// bag.add('M');
-// bag.add('P');
-// bag.add('L');
-// bag.add('E');
-// bag.display();
 
 test('백은 비어있는 상태로 생성된다', () => {
   const bag = new Bag();
