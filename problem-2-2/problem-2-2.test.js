@@ -1,4 +1,58 @@
+class Stack {
+  constructor(){
+    this.stack = [];
+  }
+
+  isEmpty(){
+    return this.stack.length === 0;
+  }
+
+  push(item){
+    this.stack.push(item);
+  }
+
+  size(){
+    return this.stack.length;
+  }
+
+  pop(){
+    if(this.isEmpty()) throw new Error('스택이 비어있습니다');
+
+    return this.stack.pop();
+  }
+
+  [Symbol.iterator](){
+    let index = 0,
+        stack = [...this.stack];
+        stack = stack.reverse();
+
+    return {
+      next(){
+        return index < stack.length ? {done : false, value : stack[index++]} : {done : true}
+      }
+    }
+
+  }
+}
+
 const solution = (string) => {
+  const stack = new Stack();
+  const brackets = { '[': ']', '{': '}', '(': ')' };
+
+  for (const bracket of string) {
+    if(brackets[bracket]){
+      stack.push(bracket);
+    }else{
+
+      if(stack.isEmpty()) return false;
+
+      const savedBrackets = stack.pop();
+      if(brackets[savedBrackets] !== bracket) return false;
+    }
+  }
+
+  return true;
+
 };
 
 test('문자열에 포함된 괄호의 짝이 맞을 때 true를 반환한다', () => {
