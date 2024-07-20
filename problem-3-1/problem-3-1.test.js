@@ -1,4 +1,50 @@
+// 1. 큐의 정의에 따라서 API를 설계해 주세요.
+// | 함수 시그니처 | 설명 |
+// | ----------- | ----------- |
+// | isEmpty(): boolean | items 배열의 빈값 여부에 따라 boolean타입을 반환합니다.|
+// | size(): number | items의 배열의 길이를 반환합니다. |
+// | enqueue(item): void | items배열에 item을 추가합니다.|
+// | dequeue(): string | items배열에 가장 먼저 추가 된 item을 제거하고 제거된 item을 반환합니다.|
+
+
 class Queue {
+  constructor(){
+    this.items = [];
+  }
+
+  isEmpty(){
+    return this.items.length === 0;
+  }
+
+  size(){
+    return this.items.length;
+  }
+
+  enqueue(item){
+    this.items.push(item);
+  }
+
+  dequeue(){
+    if(this.size() === 0) throw new Error('큐가 비어있습니다');
+
+    const item = this.items.shift();
+    return item;
+  }
+
+  [Symbol.iterator](){
+    let index = 0;
+    const queue = [...this.items];
+
+    return {
+      next() {
+        return index < queue.length
+          ? { done: false, value: queue[index++] }
+          : { done: true };
+      },
+    };
+  }
+
+
 }
 
 test('큐를 생성하면 비어있다', () => {
