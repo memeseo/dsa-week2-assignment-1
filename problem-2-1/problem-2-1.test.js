@@ -2,42 +2,65 @@
 
 // | 함수 시그니처 | 설명 |
 // | ----------- | ----------- | ----------- | ----------- |
+// | Stack(): 스택을 생성합니다. |
 // | isEmpty(): boolean | stack 배열의 빈값 여부에 따라 boolean 타입을 반환합니다. |
 // | push(item): void | stack 배열에 아이템을 추가합니다. |
 // | size(): number | stack 배열의 길이를 반환합니다. |
 // | pop(): string | Error | stack 배열에 가장 최근에 삽입한 값을 반환합니다. |
+class Node {
+  #item;
+  #next;
+}
 
 class Stack {
+  #first;
+  #n;
+
   constructor(){
-    this.stack = [];
+    this.#n = 0;
   }
 
   isEmpty(){
-    return this.stack.length === 0;
+    return this.#first === undefined;
   }
 
+
+  //resize를 왜 private함수로 했는지 궁금합니다
   push(item){
-    this.stack.push(item);
+    const oldFirst = this.#first;
+
+    this.#first = new Node();
+    this.#first.item = item;
+    this.#first.next = oldFirst;
+
+    this.#n++;
   }
 
   size(){
-    return this.stack.length;
+    return this.#n;
   }
 
   pop(){
-    if(this.isEmpty()) throw new Error('스택이 비어있습니다');
+    if(this.#first === undefined) throw new Error('스택이 비어있습니다');
 
-    return this.stack.pop();
+    const item = this.#first.item;
+    this.#n--;
+
+    this.#first = this.#first.next;
+
+    return item;
   }
 
   [Symbol.iterator](){
-    let index = 0,
-        stack = [...this.stack];
-        stack = stack.reverse();
+    let current = this.#first;
 
     return {
       next(){
-        return index < stack.length ? {done : false, value : stack[index++]} : {done : true}
+        if(current === undefined) return {done : true};
+        const value = current.item;
+        current = current.next;
+
+        return { done : false, value}
       }
     }
 
