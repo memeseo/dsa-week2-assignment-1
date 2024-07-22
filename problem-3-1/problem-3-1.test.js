@@ -1,47 +1,77 @@
 // 1. 큐의 정의에 따라서 API를 설계해 주세요.
 // | 함수 시그니처 | 설명 |
 // | ----------- | ----------- |
+// | Queue() | 큐를 생성합니다.|
 // | isEmpty(): boolean | items 배열의 빈값 여부에 따라 boolean타입을 반환합니다.|
 // | size(): number | items의 배열의 길이를 반환합니다. |
 // | enqueue(item): void | items배열에 item을 추가합니다.|
 // | dequeue(): string | items배열에 가장 먼저 추가 된 item을 제거하고 제거된 item을 반환합니다.|
 
+class Node{
+  #item;
+  #next;
+}
 
 class Queue {
+  #n;
+  #first;
+  #last;
+
   constructor(){
-    this.items = [];
+    this.#n = 0;
   }
 
   isEmpty(){
-    return this.items.length === 0;
+    return this.#first === undefined;
   }
 
   size(){
-    return this.items.length;
+    return this.#n;
   }
 
   enqueue(item){
-    this.items.push(item);
+    const oldLast = this.#last;
+    this.#last = new Node();
+    this.#last.item = item;
+
+    if(this.isEmpty()){
+      this.#first = this.#last;
+    } else {
+      oldLast.next = this.#last;
+    }
+    
+    this.#n++;
   }
 
   dequeue(){
-    if(this.size() === 0) throw new Error('큐가 비어있습니다');
+    if(this.isEmpty()) throw new Error('큐가 비어있습니다');
 
-    const item = this.items.shift();
+    const item = this.#first.item;
+    this.#first = this.#first.next;
+
+    if(this.isEmpty()){
+      this.#last = undefined;
+    }
+
+    this.#n--;
+
     return item;
   }
 
   [Symbol.iterator](){
-    let index = 0;
-    const queue = [...this.items];
+    let current = this.#first;
 
     return {
-      next() {
-        return index < queue.length
-          ? { done: false, value: queue[index++] }
-          : { done: true };
-      },
-    };
+      next(){
+        if(current === undefined) return { done : true };
+
+        const value = current.item;
+        current = current.next;
+
+        return { done : false, value};
+      }
+    }
+
   }
 
 
