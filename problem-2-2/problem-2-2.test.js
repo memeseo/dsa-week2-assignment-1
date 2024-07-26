@@ -35,7 +35,9 @@ class Stack {
   }
 }
 
-const solution = (string) => {
+const solution = (string = '') => {
+  if(string.length % 2 === 1 || string.length === 0) return false;
+
   const stack = new Stack();
   const brackets = { '[': ']', '{': '}', '(': ')' };
 
@@ -46,14 +48,19 @@ const solution = (string) => {
 
       if(stack.isEmpty()) return false;
 
-      const savedBrackets = stack.pop();
-      if(brackets[savedBrackets] !== bracket) return false;
+      const savedBracket = stack.pop();
+    
+      if(brackets[savedBracket] !== bracket) return false;
     }
   }
 
   return true;
 
 };
+
+test('문자열에 포함된 괄호의 짝이 맞지 않을 때 false를 반환한다', () => {
+  expect(solution('()(')).toBe(false);
+});
 
 test('문자열에 포함된 괄호의 짝이 맞을 때 true를 반환한다', () => {
   expect(solution('{([])}')).toBe(true);
